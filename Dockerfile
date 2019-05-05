@@ -1,15 +1,14 @@
 FROM library/postgres
 
 RUN apt-get update
-RUN apt-get -y install unzip ruby dos2unix
+RUN apt-get -y install unzip ruby dos2unix curl
 
-RUN mkdir /data
+WORKDIR /data
 COPY install.sql /data/
 COPY update_csvs.rb /data/
-COPY adventure_works_2014_OLTP_script.zip /data/
-RUN cd /data && \
-    unzip adventure_works_2014_OLTP_script.zip && \
-    rm adventure_works_2014_OLTP_script.zip && \
+RUN curl -sLO https://github.com/Microsoft/sql-server-samples/releases/download/adventureworks/AdventureWorks-oltp-install-script.zip && \
+    unzip AdventureWorks-oltp-install-script.zip && \
+    rm AdventureWorks-oltp-install-script.zip && \
     ruby update_csvs.rb && \
     rm update_csvs.rb
 
