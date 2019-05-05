@@ -8,37 +8,18 @@ sales each having an average of 4 line items. So it's big enough to be interesti
 unwieldy. In addition to being a well-rounded OLTP sample, it is also a good choice to demonstrate
 ETL into a data warehouse.
 
-Provided is a ruby file to convert CSVs available on CodePlex into a format usable by Postgres, as
-well as a Postgres script to create the tables, load the data, convert the hierarchyid columns, add
-primary and foreign keys, and create some of the views used by Adventureworks.
+Provided is a ruby file to convert CSVs available on GitHub into a format usable by Postgres, as
+well as a Postgres script to create the tables, load the data, convert the hierarchyid columns, add primary and foreign keys, and create some of the views used by Adventureworks.
 
-## How to set up the database:
-
-Download [Adventure Works 2014 OLTP Script](https://msftdbprodsamples.codeplex.com/downloads/get/880662).
-(If this link becomes broken then here's the [original page](https://msftdbprodsamples.codeplex.com/releases/view/125550).)
-
-Extract the .zip and copy all of the CSV files into the same folder, also containing update_csvs.rb file and install.sql.
-
-Modify the CSVs to work with Postgres by running:
-```
-ruby update_csvs.rb
-```
-Create the database and tables, import the data, and set up the views and keys with:
-```
-psql -c "CREATE DATABASE \"Adventureworks\";"
-psql -d Adventureworks < install.sql
-```
 All 68 tables are properly set up, and 11 of the 20 views are established.  The ones not built are those that rely on XML functions like value and ref.  To see a list of tables, open psql, and then connect to the database and show all the tables with these two commands:
 ```
-\c "Adventureworks"
+\c "AdventureWorks"
 \dt (humanresources|person|production|purchasing|sales).*
 ```
 
 ## Using with Docker
 
 You can spin up a new database using **Docker** with `docker-compose up`.
-
-_You will need to rename the Adventure Works 2014 OLTP Script archive to **adventure_works_2014_OLTP_script.zip** to get this to work!_
 
 
 ## Motivation
@@ -68,7 +49,7 @@ this to help people learn a new environment.
 
 As well, with the imminent release of SQL Server 2017 for Linux, this sample could be used to
 evaluate performance differences between Postgres and SQL 2017.  Never thought I'd see the day that
-MS SQL got compiled for Linux, but alas, here we are. 
+MS SQL got compiled for Linux, but alas, here we are.
 
 Let's keep coding fun.
 
